@@ -37,20 +37,16 @@ class General():
 
     @classmethod
     def fee(cls):
-        # ToDo: Fix me
-        # https://github.com/sugarchain-project/sugarchain/issues/34
+        data = utils.make_request("estimatesmartfee", [6])
 
-        # data = utils.make_request("estimatesmartfee", [6])
-
-        # if data["error"] is None:
-        #   data["result"]["feerate"] = utils.satoshis(data["result"]["feerate"])
-
-        # return data
-
-        return utils.response({
-            "feerate": utils.satoshis(0.00001),
-            "blocks": 6
-        })
+        if data["error"] is None:
+            data["result"]["feerate"] = utils.satoshis(data["result"]["feerate"])
+            return data
+        else:
+            return utils.response({
+                "feerate": utils.satoshis(0.0002),
+                "blocks": 6
+            })
 
     @classmethod
     def mempool(cls):
